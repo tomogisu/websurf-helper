@@ -2,10 +2,13 @@
   "manifest_version": 3,
   "name": "WebSurf Helper",
   "version": "0.1.0",
-  "description": "Double-click links to open in a new tab, and customize keyboard scroll distance.",
+  "description": "Double-click links to open in a new tab, customize keyboard scroll distance, and set a custom new tab URL.",
   "permissions": ["storage"],
   "background": {
     "service_worker": "background.js"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
   },
   "content_scripts": [
     {

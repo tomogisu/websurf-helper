@@ -15,6 +15,7 @@
     .row { margin-bottom: 10px; }
     label { display: inline-flex; align-items: center; gap: 6px; }
     input[type="number"] { width: 80px; }
+    input:disabled { color: #999; background: #f5f5f5; }
     .hint { color: #777; font-size: 12px; margin-top: 4px; }
     .status { color: #2a7; font-size: 12px; height: 16px; margin-top: 8px; }
     hr { border: none; border-top: 1px solid #eee; margin: 16px 0; }
@@ -35,8 +36,8 @@
       <input type="number" id="dblClickDelay" min="50" max="800" step="10"> ms
     </label>
     <div class="hint">
-      この時間内に 2 回目のクリックが来たらダブルクリックと判定。<br>
-      短いほどシングルクリック反応は速くなりますが、ダブルクリックを取りこぼしやすくなりますわ（推奨 200〜300ms）。
+      この時間内に 2 回目のクリックが来たらダブルクリックと判定する。<br>
+      短いほどシングルクリック反応は速くなるが、ダブルクリックを取りこぼしやすくなる（推奨 200〜300ms）。
     </div>
   </div>
 
@@ -50,7 +51,22 @@
     <label>スクロール量（ビューポート比）：
       <input type="number" id="scrollRatio" min="0.1" max="1.0" step="0.05">
     </label>
-    <div class="hint">0.5 で画面の半分。0.1 〜 1.0 の範囲で指定できますわ。</div>
+    <div class="hint">0.5 で画面の半分。0.1 〜 1.0 の範囲で指定できる。</div>
+  </div>
+
+  <hr>
+
+  <h3>新しいタブのURL</h3>
+  <div class="row">
+    <label><input type="checkbox" id="enableNewTabUrl"> 機能を有効にする</label>
+  </div>
+  <div class="row">
+    <div style="margin-bottom: 4px;">開くURL：</div>
+    <input type="url" id="newTabUrl" style="width: 100%; box-sizing: border-box;" placeholder="https://www.google.com/search?udm=50">
+    <div class="hint">
+      新しいタブを開いたときに、このURLを表示する。<br>
+      既定はGoogle検索のAIモード。OFFにすると通常のGoogle検索が開く。
+    </div>
   </div>
 
   <div id="status" class="status"></div>
