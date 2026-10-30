@@ -1,4 +1,5 @@
 const DEFAULTS = {
+  enabled: true,
   openInForeground: false,
   scrollRatio: 0.5,
   enableDblClick: true,
@@ -48,7 +49,9 @@ document.addEventListener(
   'click',
   (e) => {
     if (bypassNextClick) return;
-    if (!settings.enableDblClick) return;
+    if (!settings.enabled || !settings.enableDblClick) return;
+    // ページ側のスクリプトが dispatchEvent した偽のクリックで、新タブを勝手に開かれないようにする
+    if (!e.isTrusted) return;
     if (e.button !== 0) return;
     // 修飾キー併用は既存挙動（Ctrl+Click=新タブ等）を尊重して素通し
     if (e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
@@ -56,7 +59,8 @@ document.addEventListener(
     const anchor = e.target.closest && e.target.closest('a');
     if (!anchor) return;
     const href = anchor.href;
-    if (!href) return;
+    // SVG の <a> は href が文字列ではないため対象外にする
+    if (typeof href !== 'string' || !href) return;
     if (href.startsWith('javascript:')) return;
     // 既に新タブで開く設定のリンクは介入しない
     if (anchor.target === '_blank') return;
@@ -108,7 +112,7 @@ const isEditable = (el) => {
 document.addEventListener(
   'keydown',
   (e) => {
-    if (!settings.enableScroll) return;
+    if (!settings.enabled || !settings.enableScroll) return;
     if (e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
     if (isEditable(e.target)) return;

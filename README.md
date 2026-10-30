@@ -1,10 +1,11 @@
 # WebSurf Helper
 
-A Chrome extension that makes web surfing more comfortable with three small features:
+A Chrome extension that makes web surfing more comfortable with four small features:
 
 1. **Double-click a link** to open it in a new tab. Foreground / background is configurable.
 2. **Custom scroll amount** for the Up / Down arrow keys (default: half a viewport — between a single line and PageUp/PageDown).
 3. **Custom new tab URL** — open a fixed URL when you create a new tab (default: Google Search AI Mode).
+4. **Bookmarks always open in a new tab** — clicking a bookmark bar link keeps the current tab as is and opens the page in a new tab.
 
 ## Requirements
 
@@ -19,6 +20,8 @@ A Chrome extension that makes web surfing more comfortable with three small feat
 
 ## Configuration
 
+Click the toolbar icon to switch the whole extension ON / OFF. When OFF, every feature below is stopped and a new tab opens regular Google Search.
+
 Open the extension's **Options** (from `chrome://extensions/` → "Details" → "Extension options", or click the extension icon → options).
 
 | Setting | Default | Description |
@@ -27,6 +30,7 @@ Open the extension's **Options** (from `chrome://extensions/` → "Details" → 
 | Open new tab in foreground | OFF | If OFF, new tabs open in the background |
 | Custom arrow-key scroll | ON | Enable / disable the scroll feature |
 | Scroll ratio | 0.5 | Fraction of viewport scrolled per key press (0.1 – 1.0) |
+| Open bookmarks in a new tab | ON | Enable / disable opening bookmark clicks in a new tab |
 | Custom new tab URL | OFF | Enable / disable redirecting new tabs to a fixed URL |
 | New tab URL | `https://www.google.com/search?udm=50` | URL opened when a new tab is created |
 
@@ -35,6 +39,7 @@ Open the extension's **Options** (from `chrome://extensions/` → "Details" → 
 - Arrow-key scrolling is suppressed while focus is in `<input>`, `<textarea>`, `<select>`, or any `contenteditable` element.
 - Modifier keys (Ctrl / Shift / Alt / Cmd) bypass the custom scroll so site- and browser-specific shortcuts keep working.
 - Anchors with `javascript:` and pure in-page hashes (`#...`) are ignored by the double-click handler.
+- Bookmark navigation cannot be blocked by an extension, so the tab first navigates, then goes back and the page is reopened in a new tab. This keeps the original tab's favicon intact. In a tab with no history (e.g. a fresh new tab), the bookmark opens in that tab as usual.
 - The new tab page is overridden via `chrome_url_overrides`. When the feature is OFF, the new tab opens regular Google Search (`https://www.google.com`).
 
 ## License

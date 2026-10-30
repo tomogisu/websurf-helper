@@ -7,6 +7,7 @@ const DEFAULTS = {
   enableDblClick: true,
   enableScroll: true,
   dblClickDelay: 250,
+  enableBookmarkNewTab: true,
   enableNewTabUrl: false,
   newTabUrl: 'https://www.google.com/search?udm=50',
 };
@@ -35,6 +36,7 @@ function load() {
     $('enableScroll').checked = !!data.enableScroll;
     $('scrollRatio').value = data.scrollRatio;
     $('dblClickDelay').value = data.dblClickDelay;
+    $('enableBookmarkNewTab').checked = !!data.enableBookmarkNewTab;
     $('enableNewTabUrl').checked = !!data.enableNewTabUrl;
     savedNewTabUrl = data.newTabUrl;
     renderNewTabUrl();
@@ -45,7 +47,13 @@ function save() {
   const enableNewTabUrl = $('enableNewTabUrl').checked;
   // ON のときだけ入力値を採用。OFF 表示中の Google 検索 URL で上書きしない。
   if (enableNewTabUrl) {
-    savedNewTabUrl = $('newTabUrl').value.trim() || DEFAULTS.newTabUrl;
+    const input = $('newTabUrl').value.trim();
+    // newtab.js は http(s) 以外を無視するため、保存前に気づけるようここで弾く
+    if (input && !/^https?:\/\//i.test(input)) {
+      $('status').textContent = 'http または https のURLを入力してください';
+      return;
+    }
+    savedNewTabUrl = input || DEFAULTS.newTabUrl;
   }
   const value = {
     openInForeground: $('openInForeground').checked,
@@ -53,6 +61,7 @@ function save() {
     enableScroll: $('enableScroll').checked,
     scrollRatio: clamp(parseFloat($('scrollRatio').value) || 0.5, 0.1, 1.0),
     dblClickDelay: clamp(parseInt($('dblClickDelay').value, 10) || 250, 50, 800),
+    enableBookmarkNewTab: $('enableBookmarkNewTab').checked,
     enableNewTabUrl,
     newTabUrl: savedNewTabUrl,
   };

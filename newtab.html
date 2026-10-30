@@ -2,10 +2,14 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
+  <meta name="color-scheme" content="dark light">
   <title>New Tab</title>
   <style>
-    /* 遷移までの一瞬に白画面のみ見せ、ちらつきを抑える */
+    /* 遷移までの一瞬に見える中継ページを、ダークモードで白く光らせないための背景指定 */
     html, body { margin: 0; height: 100%; background: #fff; }
+    @media (prefers-color-scheme: dark) {
+      html, body { background: #202124; }
+    }
   </style>
 </head>
 <body>

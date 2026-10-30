@@ -3,7 +3,10 @@
   "name": "WebSurf Helper",
   "version": "0.1.0",
   "description": "Double-click links to open in a new tab, customize keyboard scroll distance, and set a custom new tab URL.",
-  "permissions": ["storage"],
+  "permissions": ["storage", "webNavigation"],
+  "action": {
+    "default_popup": "popup.html"
+  },
   "background": {
     "service_worker": "background.js"
   },
